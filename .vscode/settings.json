@@ -1,0 +1,24 @@
+{
+  "editor.codeActionsOnSave": {
+    "source.fixAll": "explicit",
+    "source.organizeImports": "explicit",
+    "source.sortMembers": "explicit"
+  },
+  "editor.formatOnSave": true,
+  "jest.jestCommandLine": "npm run test:run -- ",
+  "jest.outputConfig": {
+    "clearOnRun": "none",
+    "revealOn": "run",
+    "revealWithFocus": "test-results"
+  },
+  "jest.runMode": {
+    "type": "on-demand"
+  },
+  "search.exclude": {
+    "**/docs": true,
+    "**/postman": true
+  },
+  "[markdown]": {
+    "editor.wordWrap": "off"
+  }
+}

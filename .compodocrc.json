@@ -1,0 +1,10 @@
+{
+  "$schema": "./node_modules/@compodoc/compodoc/src/config/schema.json",
+  "disableSourceCode": true,
+  "name": "Infisical Server Helper docs",
+  "open": true,
+  "output": "docs/compodoc",
+  "port": 8181,
+  "theme": "material",
+  "tsconfig": "tsconfig.doc.json"
+}
