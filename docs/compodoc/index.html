@@ -1,0 +1,297 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Infisical Server Helper docs</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="./images/favicon.ico">
+	   <link rel="stylesheet" href="./styles/style.css">
+        <link rel="stylesheet" href="./styles/dark.css">
+        <link rel="stylesheet" href="./styles/material.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="./" class="navbar-brand">Infisical Server Helper docs</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content getting-started">
+                   <div class="content-data">
+
+<h1>Infisical Server Helper</h1>
+<h2>Installation</h2>
+<p>You can run this software via Docker:</p>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-bash">docker run marcuson/infisical-server-helper</code></pre></div><h2>Configuration</h2>
+<p>You can configure the way the app works with the following env vars:</p>
+<table class="table table-bordered compodoc-table">
+<thead>
+<tr>
+<th>Env var</th>
+<th>Default value</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>API_ENABLED</td>
+<td><code>true</code></td>
+<td>Whether the API is enabled or not. <strong>Note</strong>: the API is not authenticated and you <strong>should</strong> provide an external authentication mechanism if exposing this publicly!</td>
+</tr>
+<tr>
+<td>BACKUP_MAX_NUM</td>
+<td><code>30</code></td>
+<td>Maximum number of most recent backups to keep.</td>
+</tr>
+<tr>
+<td>BACKUP_PASSWORD</td>
+<td>-</td>
+<td><strong>Required</strong>. Password to use to encrypt backups.</td>
+</tr>
+<tr>
+<td>DATA_DIR</td>
+<td><code>/ish/data</code></td>
+<td>Location where Infisical Server Helper related data will be stored. It should be persistent (mount a volume or local directory to this path).</td>
+</tr>
+<tr>
+<td>IP_BIND</td>
+<td><code>0.0.0.0</code></td>
+<td>IP where to bind the web server for API.</td>
+</tr>
+<tr>
+<td>INFISICAL_CLIENTID</td>
+<td>-</td>
+<td><strong>Required</strong>. Client id to access your Infisical instance.</td>
+</tr>
+<tr>
+<td>INFISICAL_CLIENTSECRET</td>
+<td>-</td>
+<td><strong>Required</strong>. Client secret to access your Infisical instance.</td>
+</tr>
+<tr>
+<td>INFISICAL_SERVER_URL</td>
+<td><code>https://app.infisical.com</code></td>
+<td>URL of the server where you Infisical instance is. Use <code>https://app.infisical.com</code> or insert your self-hosted URL.</td>
+</tr>
+<tr>
+<td>LOG_LEVEL</td>
+<td><code>info</code></td>
+<td>Max log level to be shown.</td>
+</tr>
+<tr>
+<td>SCHEDULE_ENABLED</td>
+<td><code>false</code></td>
+<td>Whether the scheduled actions are enabled or not.</td>
+</tr>
+<tr>
+<td>SCHEDULE_BACKUP_CRON</td>
+<td><code>0 0 * * *</code></td>
+<td>The cron expression for automated backups. Pass an empty string to disable this specific task.</td>
+</tr>
+<tr>
+<td>SCHEDULE_BACKUP_WORKSPACE_IDS</td>
+<td>-</td>
+<td><strong>Required if SCHEDULE_BACKUP_CRON is enabled</strong>. Comma separated list of project ids to backup during scheduled backup.</td>
+</tr>
+<tr>
+<td>SWAGGER_ENABLED</td>
+<td><code>false</code></td>
+<td>Whether to enable Swagger or not. You can find Swagger under the &quot;/api&quot; path of the web server.</td>
+</tr>
+<tr>
+<td>NODE_ENV</td>
+<td><code>production</code></td>
+<td>The Node environment used for libraries like Express. Suggested to leave as per default.</td>
+</tr>
+<tr>
+<td>TZ</td>
+<td><code>Etc/UTC</code></td>
+<td>The timezone used for schedules.</td>
+</tr>
+</tbody>
+</table>
+<h2>Development</h2>
+<h3>Prerequisites</h3>
+<ul>
+<li>you should have Docker installed</li>
+<li>configure the &quot;.env&quot; file (copy template from &quot;.env.example&quot;)</li>
+<li>run <code>npm install</code> to get all needed deps from NPM</li>
+</ul>
+<h3>Start app</h3>
+<p>Once the prerequisites are met, you should:</p>
+<ul>
+<li>run <code>npm run start:debug</code>. You can attach nodejs debugger to port 9229.</li>
+</ul>
+<h3>Docs</h3>
+<p>We use Compodoc to automatically generate technical docs from source code. The generation
+process must be started manually running the <code>npm run doc</code> command from shell. After a succesfull
+execution, the generated documentation will be available in &quot;docs/compodoc&quot;.</p>
+<h3>Test</h3>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-bash"># unit tests
+npm run test:unit
+
+# unit tests coverage
+npm run test:unit:cov
+
+# e2e tests
+npm run test:e2e</code></pre></div><h3>Useful dev info</h3>
+<ul>
+<li>If you want to import local files in plugins of &quot;nest-cli.json&quot;, you must use <code>.js</code> files AND
+write a path relative to the &quot;&lt;repo root&gt;/node_modules&quot; folder!</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 0;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'getting-started';
+            var COMPODOC_CURRENT_PAGE_URL = 'index.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="./js/libs/custom-elements.min.js"></script>
+       <script src="./js/libs/lit-html.js"></script>
+
+       <script src="./js/menu-wc.js" defer></script>
+       <script nomodule src="./js/menu-wc_es5.js" defer></script>
+
+       <script src="./js/libs/bootstrap-native.js"></script>
+
+       <script src="./js/libs/es6-shim.min.js"></script>
+       <script src="./js/libs/EventDispatcher.js"></script>
+       <script src="./js/libs/promise.min.js"></script>
+
+       <script src="./js/compodoc.js"></script>
+
+       <script src="./js/tabs.js"></script>
+       <script src="./js/menu.js"></script>
+       <script src="./js/libs/clipboard.min.js"></script>
+       <script src="./js/libs/prism.js"></script>
+       <script src="./js/sourceCode.js"></script>
+          <script src="./js/search/search.js"></script>
+          <script src="./js/search/lunr.min.js"></script>
+          <script src="./js/search/search-lunr.js"></script>
+          <script src="./js/search/search_index.js"></script>
+       <script src="./js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>
