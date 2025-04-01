@@ -3,6 +3,7 @@ import { appConfig } from '../../app.config';
 import { InfisicalModule } from '../infisical/infisical.module';
 import { BackupController } from './backup.controller';
 import { BackupSchedule } from './backup.schedule';
+import { BackupScheduleController } from './backup.schedule.controller';
 import { BackupService } from './backup.service';
 
 const providers = [
@@ -10,10 +11,17 @@ const providers = [
   appConfig.props.scheduleEnabled ? BackupSchedule : undefined,
 ].filter((x) => x !== undefined);
 
+const controllers = [
+  appConfig.props.apiEnabled ? BackupController : undefined,
+  appConfig.props.apiEnabled && appConfig.props.nodeEnv === 'development'
+    ? BackupScheduleController
+    : undefined,
+].filter((x) => x !== undefined);
+
 @Module({
   imports: [InfisicalModule],
   providers: providers,
   exports: [BackupService],
-  controllers: !appConfig.props.apiEnabled ? [] : [BackupController],
+  controllers: controllers,
 })
 export class BackupModule {}

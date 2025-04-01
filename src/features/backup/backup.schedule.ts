@@ -14,16 +14,7 @@ export class BackupSchedule {
   })
   async backupCron(): Promise<void> {
     this.logger.log('Starting scheduled backup');
-
-    const workspaceIds = appConfig.props.scheduleBackupWorkspaceIds;
-    if (!workspaceIds) {
-      this.logger.warn(
-        'No workspace ids found to backup, did you set the SCHEDULE_BACKUP_WORKSPACE_IDS env var?',
-      );
-      return;
-    }
-
-    await this.backupSrv.backupWorkspaces(workspaceIds);
+    await this.backupSrv.scheduleBackupWorkspaces();
     this.logger.log('Scheduled backup finished');
   }
 }

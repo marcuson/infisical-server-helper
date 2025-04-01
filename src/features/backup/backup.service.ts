@@ -31,6 +31,19 @@ export class BackupService {
     return join(appConfig.props.dataDir, 'backup');
   }
 
+  async scheduleBackupWorkspaces(
+    options?: Partial<BackupWorkspacesOptions>,
+  ): Promise<BackupWorkspacesReturn> {
+    const workspaceIds = appConfig.props.scheduleBackupWorkspaceIds;
+    if (!workspaceIds) {
+      throw new Error(
+        'No workspace ids found to backup, did you set the SCHEDULE_BACKUP_WORKSPACE_IDS env var?',
+      );
+    }
+
+    return await this.backupWorkspaces(workspaceIds);
+  }
+
   async backupWorkspaces(
     workspaceIds: string[],
     options?: Partial<BackupWorkspacesOptions>,

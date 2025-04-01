@@ -2,14 +2,14 @@ import OriginalJoi, { Schema } from 'joi';
 import { AppConfigMutableKey, AppConfigMutablePart } from './app-config-props';
 
 type JoiType = typeof OriginalJoi & {
-  commaSeparatedList(): OriginalJoi.ArraySchema;
+  commaSeparatedList(): OriginalJoi.ArraySchema<string>;
 };
 
 const Joi: JoiType = OriginalJoi.extend((joi) => ({
-  base: OriginalJoi.array(),
-  coerce: (value, helpers) => ({
-    value: value.split ? value.split(',') : value,
-  }),
+  base: joi.array<string[]>(),
+  coerce(val, helpers) {
+    return { value: val.split ? val.split(',') : val };
+  },
   type: 'commaSeparatedList',
 }));
 
@@ -74,7 +74,7 @@ export const envCfg = {
   ),
   SCHEDULE_BACKUP_WORKSPACE_IDS: cfg(
     'scheduleBackupWorkspaceIds',
-    Joi.commaSeparatedList().prefs({ convert: true }),
+    Joi.commaSeparatedList().optional().prefs({ convert: true }),
   ),
   SWAGGER_ENABLED: cfg('swaggerEnabled', Joi.bool().optional().default(false)),
 };

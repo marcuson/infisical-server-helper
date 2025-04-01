@@ -46,7 +46,7 @@ describe('AppConfig', () => {
       appConfig.actualizeFromEnv();
 
       expect(cfg.props.scheduleBackupWorkspaceIds).toBeDefined();
-      expect(cfg.props.scheduleBackupWorkspaceIds).toBe([
+      expect(cfg.props.scheduleBackupWorkspaceIds).toEqual([
         'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx',
         'yyyyyyyy-yyyy-yyyy-yyyy-yyyyyyyyyyyy',
       ]);

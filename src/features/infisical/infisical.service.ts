@@ -60,19 +60,6 @@ export class InfisicalService {
     return res.data;
   }
 
-  async logout(): Promise<void> {
-    this.logger.debug(`Logout from Infisical`);
-
-    if (compareDesc(this.lastTokenExpiration, Date.now()) <= 0) {
-      this.logger.log(
-        'Infisical access token already expired, no need to logout.',
-      );
-      return;
-    }
-
-    await this.apiClient.apiV1AuthLogoutPost();
-  }
-
   async getWorkspaceInfo(opts: {
     workspaceId: string;
   }): Promise<ApiTypeExtract<'apiV1WorkspaceWorkspaceIdGet'>['workspace']> {
