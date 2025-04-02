@@ -1,6 +1,6 @@
 {
   "name": "infisical-server-helper",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "An Infisical server helper for useful tasks (like backup).",
   "author": "Leonardo Marcucci",
   "private": true,
