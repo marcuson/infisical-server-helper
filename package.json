@@ -22,7 +22,7 @@
     "docker:local:compose": "docker compose -f docker-compose.local.yml",
     "docker:local:dive": "dive marcuson/infisical-server-helper:latest-local",
     "docker:multiarch:build-push": "cross-env-shell docker buildx build -f Dockerfile --platform linux/amd64,linux/arm64 -t marcuson/infisical-server-helper:$VER -t marcuson/infisical-server-helper:$LVER --push .",
-    "docker:hub:desc": "cross-env-shell docker run -v $PWD/README.md:/workspace/README.md -e DOCKERHUB_USERNAME='${DOCKERHUB_USER}' -e DOCKERHUB_PASSWORD='${DOCKERHUB_PAT}' -e DOCKERHUB_REPOSITORY='marcuson/infisical-server-helper' -e README_FILEPATH='/workspace/README.md' -e SHORT_DESCRIPTION=\\\"Utilities for Infisical server management\\\" peterevans/dockerhub-description",
+    "docker:hub:desc": "cross-env-shell docker run -v $PWD/README.md:/workspace/README.md -e DOCKERHUB_USERNAME='${DOCKERHUB_USER}' -e DOCKERHUB_PASSWORD='${DOCKERHUB_PAT}' -e DOCKERHUB_REPOSITORY='marcuson/infisical-server-helper' -e README_FILEPATH='/workspace/README.md' -e SHORT_DESCRIPTION=\\\"Utilities for Infisical server management\\\" -e ENABLE_URL_COMPLETION='false' peterevans/dockerhub-description:4.0.0",
     "docker:slim": "slim build --http-probe-off --preserve-path-file ignore.txt marcuson/infisical-server-helper:0.0.0",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "g:api-infisical:clean": "rimraf src/features/infisical-api",
