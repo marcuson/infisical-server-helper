@@ -72,6 +72,10 @@ export const envCfg = {
     'scheduleBackupCron',
     Joi.string().optional().default('0 0 * * *'),
   ),
+  SCHEDULE_BACKUP_HEALTHCHECKS_URL: cfg(
+    'scheduleBackupHealthchecksUrl',
+    Joi.string().uri().optional(),
+  ),
   SCHEDULE_BACKUP_WORKSPACE_IDS: cfg(
     'scheduleBackupWorkspaceIds',
     Joi.commaSeparatedList().optional().prefs({ convert: true }),

@@ -9,6 +9,7 @@ import { ScheduleModule } from '@nestjs/schedule';
 import { LoggerModule } from 'nestjs-pino';
 import { appConfig } from './app.config';
 import { BackupModule } from './features/backup/backup.module';
+import { HealthchecksModule } from './features/healthchecks/healthchecks.module';
 import { InfisicalModule } from './features/infisical/infisical.module';
 import { VersionModule } from './features/version/version.module';
 import { HomeController } from './home.controller';
@@ -32,6 +33,8 @@ const imports: (ModuleDef | undefined)[] = [
     },
     exclude: ['/healthcheck'],
   }),
+
+  HealthchecksModule,
   InfisicalModule,
   BackupModule,
   ScheduleModule.forRoot(),

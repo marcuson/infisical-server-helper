@@ -1,16 +1,25 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { Cron, CronExpression } from '@nestjs/schedule';
 import { appConfig } from '../../app.config';
+import { MeasuredHealthcheck } from '../healthchecks/healthchecks.decorators';
+import { HealthchecksService } from '../healthchecks/healthchecks.service';
 import { BackupService } from './backup.service';
 
 @Injectable()
 export class BackupSchedule {
   private readonly logger = new Logger(BackupSchedule.name);
 
-  constructor(private backupSrv: BackupService) {}
+  constructor(
+    private healthcheck: HealthchecksService,
+    private backupSrv: BackupService,
+  ) {}
 
   @Cron(appConfig.props.scheduleBackupCron || CronExpression.EVERY_YEAR, {
     disabled: !appConfig.props.scheduleBackupCron,
+  })
+  @MeasuredHealthcheck({
+    enabled: !!appConfig.props.scheduleBackupHealthchecksUrl,
+    url: appConfig.props.scheduleBackupHealthchecksUrl!,
   })
   async backupCron(): Promise<void> {
     this.logger.log('Starting scheduled backup');
