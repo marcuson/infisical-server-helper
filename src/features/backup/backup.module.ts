@@ -13,9 +13,7 @@ const providers = [
 
 const controllers = [
   appConfig.props.apiEnabled ? BackupController : undefined,
-  appConfig.props.apiEnabled && appConfig.props.nodeEnv === 'development'
-    ? BackupScheduleController
-    : undefined,
+  appConfig.props.apiEnabled ? BackupScheduleController : undefined,
 ].filter((x) => x !== undefined);
 
 @Module({
